@@ -198,7 +198,6 @@ case "sticker": {
 }
 break
 case "tiktok": {
-  if (!isPremium) return reply("Kamu Belum Menjadi User Premium Silahkan Beli Premium Ke Owner Dengan Ketik .owner")
   if (!q) return reply(`Penggunaan Salah Contoh ${prefix+command} https://vm.tiktok.com/ZSLdF9NYN`)
   let tiktod = await Tiktok(q)
   let tekstik = `Downloader Tiktok

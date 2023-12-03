@@ -257,6 +257,46 @@ ${cpus.map((cpu, i) => `${i + 1}. ${cpu.model.trim()} (${cpu.speed} MHZ)\n${Obje
   reply(respon)
 }
 break
+case "eval": {
+  if (!isOwner) return reply("Can Only Be Used by Bot Owners !")
+  if (!q) return reply("Code Not Found (404)")
+  var arg = command == ">" ? args.join(" ") : "return " + args.join(" ")
+  try {
+    var txtes = util.format(await eval(`(async()=>{ ${arg} })()`))
+    reply(txtes)
+  } catch(e) {
+    let _syntax = ""
+    let _err = util.format(e)
+    let err = syntaxerror(arg, "EvalError", {
+      allowReturnOutsideFunction: true,
+      allowAwaitOutsideFunction: true,
+      sourceType: "commonjs"
+    })
+  if (err) _syntax = err + "\n\n"
+    reply(util.format(_syntax + _err))
+  }
+}
+break
+case "exec": {
+  if (!isOwner) return reply("Can Only Be Used by Bot Owners !")
+  if (!q) return reply("Code Not Found (404)")
+  exec(text, (err, stdout) => {
+    if (err) return reply(`${err}`)
+    if (stdout) {
+      reply(stdout)
+    }
+  })
+}
+break
+case "speedtest": {
+  exec("python3 speed.py", (err, stdout) => {
+    if (err) return reply(`${err}`)
+    if (stdout) {
+      reply(stdout)
+    }
+  })
+}
+break
 default:
 }
 } catch (e) {
